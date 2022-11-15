@@ -16,10 +16,10 @@ searchterms=[
 	]
 
 def strp (var):
-	var = var.strip("\n")
-	#var = '\t'.join(var.split('|'))
-	var = var + '|'
-	return var
+    var = var.strip("\n")
+    var = var.strip() + '|'
+    #var = '\t'.join(var.split('|')
+    return var
 
 name = input("Enter file to append string (Enter for 'PBDBwMetformin.txt'): ")
 if len(name) == 0 : name = "PBDBwMetformin.txt"
@@ -30,11 +30,11 @@ handle1 = open(name)
 for line in handle1:
 	line = strp(line)
 	ID = line.split('|')
-	if ID[0].find('Subject ID') != -1: firstline = line[1:] + 'Found Search Terms\n'
+	if ID[0].find('Subject ID') != -1: firstline = line[0:] + 'Found Search Terms\n'
 	else:
 		try:
 			for term in searchterms:
-				if line.lower().find(term.lower()) != -1: line =  line.lstrip(' ') + ' ' + term	
+				if line.lower().find(term.lower()) != -1: line += term	
 			if ID[0] in multiples.keys(): multiples[ID[0]] += 1
 			else: multiples[ID[0]] = 1
 			key =  ID[0] + '-' + str(multiples[ID[0]])
@@ -49,5 +49,5 @@ if savename == "d": savename = "Metformin_Cohort_Searched.txt"
 f = open(savename,'w')
 f.write('sep=|\n')
 f.write(firstline)
-for key, value in sorted(outlist.items(), key=lambda item: item[1]): f.write (value[1])
+for key, value in sorted(outlist.items(), key=lambda item: item[1]): f.write (value[1].lower())
 f.close()
