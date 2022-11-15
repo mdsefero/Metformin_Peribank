@@ -17,7 +17,7 @@ searchterms=[
 
 def strp (var):
     var = (var.strip() + '|').lower()
-    #var = '\t'.join(var.split('|')
+    var = '|'.join(var.split('\t'))
     return var
 
 name = input("Enter file to append string (Enter for 'PBDBwMetformin.txt'): ")
@@ -26,7 +26,7 @@ if len(name) == 0 : name = "PBDBwMetformin.txt"
 multiples = dict()
 outlist = dict()
 with open(name) as f: 
-    firstline = strp(f.readline()) + 'Found Search Terms|Metformin\n'
+    firstline = strp(f.readline()) + 'found search terms|metformin\n'
     for line in f:  
         line = strp(line)
         ID = line.split('|')
